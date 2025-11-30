@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wholesale-api
+  namespace: wholesale
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: wholesale-api
+  template:
+    metadata:
+      labels:
+        app: wholesale-api
+    spec:
+      containers:
+        - name: wholesale-api
+          image: <YOUR_ECR_REPO_URI>:latest
+          ports:
+            - containerPort: 3000
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "250m"
+              memory: "256Mi"
