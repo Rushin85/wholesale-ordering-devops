@@ -1,0 +1,15 @@
+# Terraform
+.terraform/
+.terraform.lock.hcl
+
+# Local
+*.tfstate
+*.tfstate.*
+crash.log
+terraform.tfvars
+
+# Node
+node_modules
+
+# OS
+.DS_Store
